@@ -1,0 +1,1 @@
+minEmax :: [Int] -> (Int,Int)
