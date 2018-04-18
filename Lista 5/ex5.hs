@@ -26,12 +26,22 @@ unico :: [Int] -> [Int]
 unico [] = []
 unico x  = unicoAux x (insertionSort_1 x)
 
-
-
 unicoAux :: [Int] -> [Int] -> [Int]
+unicoAux a [] = []
 unicoAux a (x:xs)
-  | membroNum a (x:xs) == 1 = a : unicoAux a xs
+  | membroNum a x == 1 = x : unicoAux a xs
   | otherwise               = unicoAux a xs
+
+-- 5. Se a lista argumento para membro está ordenada, não é necessário percorrer
+--toda a lista para saber se o elemento está presente na lista. Implemente
+--uma nova definição de membro, que use iSort.
+
+membroOrdenado :: [Int] -> Int -> Bool
+membroOrdenado [] a = False
+membroOrdenado (x:xs) a
+  | x < a     = membro xs a
+  | a == x    = True
+  | x > a     = False
 
 
 -- Elimina repetições
@@ -45,3 +55,14 @@ ins_1 a (x:xs)
   | a == x = x:xs
   | a >  x = x : ins_1 a xs 
   | a < x  = a : x : xs
+
+-- Insertion Sort
+ins :: Int -> [Int] -> [Int]
+ins a [] = [a]
+ins a (x:xs)
+  | a >  x = x : ins a xs 
+  | a <= x = a : x : xs
+
+insertionSort :: [Int] -> [Int]
+insertionSort [] = []
+insertionSort (x:xs) = ins x (insertionSort xs)
