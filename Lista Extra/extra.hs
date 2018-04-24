@@ -100,7 +100,7 @@ intercala (x:xs) (y:ys) = x : y : intercala xs ys
 -- > compress "aaaabccaadeeee"
 --"abcade"
 
-compress :: [a] -> [a]
+compress :: (Eq a) => [a] -> [a]
 compress []  = []
 compress [x] = [x]
 compress (x:y:xs)
@@ -113,10 +113,32 @@ compress (x:y:xs)
 --’a’, ’d’, ’e’, ’e’, ’e’, ’e’]
 --["aaaa","b","cc","aa","d","eeee"]
 
+pack :: (Eq a) => [a] -> [[a]]
+pack []  = []
+pack [x] = [x]
+pack (x:y:xs)
+  | x == y    = [x : pack (y:xs)]
+  | otherwise = pack (y:xs)
 
 --(12) Implementar a função encode:
 -- > encode "aaaabccaadeeee"
 --[(4,’a’),(1,’b’),(2,’c’),(2,’a’),(1,’d’),(4,’e’)]
+
+encode :: (Eq a) => [a] -> [(Int, a)]
+encode []  = (-1,-1)
+encode [x] =
+encode (x:y:xs)
+  | 
+  |
+  |
+
+quantEncode :: (Eq a) => [a] -> Int
+quantEncode []  = 0
+quantEncode [x] = 1
+quantEncode (x:y:xs)
+  | x == y = 1 + quantEncode (y:xs)
+  | otherwise = 1
+
 
 
 --(13) Implementar a função dupli, que duplica os elementos de uma lista:
