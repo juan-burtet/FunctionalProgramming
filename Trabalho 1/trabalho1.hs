@@ -2,6 +2,7 @@
 -- em várias linhas e devolve o mesmo texto justificado 
 -- pela maior linha. Exemplo de texto:
 --justifica :: String -> String
+--justica texto = tamanhoMaiorLinha ()
 
 -- Função que separa as Strings em Linhas
 separaLinhas :: String -> [String]
@@ -10,6 +11,12 @@ separaLinhas a = lines a
 -- Função que separa as palavras por espaço
 separaPalavras :: String -> [String]
 separaPalavras a = words a
+
+-- Função que separa as palavras em um conjunto de todas as linhas
+separaPalavrasLinhas :: [String] -> [[String]]
+separaPalavrasLinhas [] = []
+separaPalavrasLinhas (x:xs) = separaPalavras x : separaPalavrasLinhas xs
+
 
 -- Função que retorna o tamanho da maior linha
 tamanhoMaiorLinha :: [String] -> Int
@@ -44,3 +51,10 @@ removeEspacoDuplicado [a] = [a]
 removeEspacoDuplicado (x:xs:xss)
   | (x == ' ') && (xs == ' ') = removeEspacoDuplicado (xs:xss)
   | otherwise                 = x : removeEspacoDuplicado (xs:xss)
+
+
+-- Função que conta a quantidade de palavras
+contaPalavras :: [String] -> Int
+contaPalavras [] = 0
+contaPalavras (x:xs) = 1 + contaPalavras xs
+

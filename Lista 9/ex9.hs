@@ -56,4 +56,3 @@ somaListas a = foldr (+) 0 (map (foldr (+) 0) a)
 -- de uma lista de listas (usando map e fold)
 -- Hugs> somaTamanhoListas [[1,2,3,4],[4], [3,2],[3]]
 -- 8
-
