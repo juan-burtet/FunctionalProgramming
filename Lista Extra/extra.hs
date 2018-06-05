@@ -115,7 +115,7 @@ compress (x:y:xs)
 
 pack :: (Eq a) => [a] -> [[a]]
 pack []  = []
-pack [x] = [x]
+pack [x] = [[x]]
 pack (x:y:xs)
   | x == y    = [x : pack (y:xs)]
   | otherwise = pack (y:xs)
@@ -124,13 +124,10 @@ pack (x:y:xs)
 -- > encode "aaaabccaadeeee"
 --[(4,’a’),(1,’b’),(2,’c’),(2,’a’),(1,’d’),(4,’e’)]
 
-encode :: (Eq a) => [a] -> [(Int, a)]
-encode []  = (-1,-1)
-encode [x] =
-encode (x:y:xs)
-  | 
-  |
-  |
+--encode :: (Eq a) => [a] -> [(Int, a)]
+--encode []  = (-1,[])
+--encode [x] = [(0,x)]
+--encode (x:y:xs) = [(0,x)]
 
 quantEncode :: (Eq a) => [a] -> Int
 quantEncode []  = 0
