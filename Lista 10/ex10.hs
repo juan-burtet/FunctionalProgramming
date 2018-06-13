@@ -60,9 +60,36 @@ todosItensAlugados = TodosAlugados [itemAlugado]
 
 -- 6.Defina uma funcao que serve para alugar um item
 
-alugarItem :: SocioLocadora -> ItemDeLocadora -> ItemAlugado
-alugarItem s i = Alugado s i
+alugarItem :: SocioLocadora -> ItemDeLocadora -> ItensDisponiveis -> TodosItensAlugados -> (SocioLocadora, ItensDisponiveis, TodosItensAlugados)
+alugarItem s i d a
+  | confereItensDisponives i d = (x, removeItemDisponivel d i, addItemAlugado x a i)
+  | otherwise                  = (s,d,a)
+    where
+      
+      x = addItemSocio s i
 
+confereItensDisponives :: ItemDeLocadora -> ItensDisponiveis -> Bool
+confereItensDisponives item (Itens []) = False
+confereItensDisponives item (Itens (x:xs))
+  | x == item = True
+  | otherwise = confereItensDisponives item (Itens xs)
+
+addItemSocio :: SocioLocadora -> ItemDeLocadora -> SocioLocadora
+addItemSocio (Socio n m []) i = Socio n m [i]
+addItemSocio (Socio n m x)  i = Socio n m (i:x)
+
+removeItemDisponivel :: ItensDisponiveis -> ItemDeLocadora -> ItensDisponiveis
+removeItemDisponivel (Itens x) i = Itens (removeItemDisponivelAux x i) 
+
+removeItemDisponivelAux :: [ItemDeLocadora] -> ItemDeLocadora -> [ItemDeLocadora]
+removeItemDisponivelAux [] i = []
+removeItemDisponivelAux (x:xs) i
+  | x == i    = xs
+  | otherwise = x : removeItemDisponivelAux xs i
+
+addItemAlugado :: SocioLocadora -> TodosItensAlugados -> ItemDeLocadora -> TodosItensAlugados
+addItemAlugado s (TodosAlugados []) i = TodosAlugados [Alugado s i]
+addItemAlugado s (TodosAlugados x)  i = TodosAlugados ((Alugado s i):x)
 
 -- 7.Defina uma funcao que retorne todos os itens alugados para uma pessoa
 
