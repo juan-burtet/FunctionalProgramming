@@ -84,15 +84,53 @@ leNomeESobrenome = do
 --  resp <- leNomeESobrenome
 --  putStrLn resp
 
-main = do
-  nomes <- leNomes 
-  putStr ((foldr1 (++) . map (++"\n") . iSort) nomes)
+--main = do
+--  nomes <- leNomes 
+--  putStr ((foldr1 (++) . map (++"\n") . iSort) nomes)
 
-leNomes :: IO [String]
-leNomes = do
-  nome <- getLine
-  if (nome == "")
-  	then return []
-  	else do
-  	  nomes <- leNomes
-  	  return $ [nome] ++ nomes
+--leNomes :: IO [String]
+--leNomes = do
+--  nome <- getLine
+--  if (nome == "")
+--    then return []
+--  else do
+--    nomes <- leNomes
+--  	return $ [nome] ++ nomes
+
+
+-----------------------
+
+data SocioClube = Socio Int String String
+--  deriving(Eq,Show)
+
+eqSocio :: SocioClube -> SocioClube -> Bool
+eqSocio (Socio c1 _ _) (Socio c2 _ _) = c1 == c2
+
+instance Eq SocioClube where 
+  (==) = eqSocio
+
+showSocio :: SocioClube -> String
+showSocio (Socio i c1 c2) =
+  "{" ++ "Codigo:" ++ show i ++
+  ", Nome: " ++ c1 ++ ", Fone: " ++ c2 ++ "}"
+
+instance Show SocioClube where
+  show = showSocio
+
+data TUnica a = T1 a a
+
+showTUnica :: Show a => TUnica a -> String
+showTUnica (T1 a b) = "(" ++ show a ++ "," ++ show b ++ ")"
+
+instance Show a => Show (TUnica a) where
+  show = showTUnica
+
+
+data Tupla a b = T2 a b
+
+showTupla :: (Show a, Show b) => Tupla a b -> String
+showTupla (T2 a b) = "(" ++ show a ++ "," ++ show b ++ ")"
+
+instance (Show a, Show b) => Show (Tupla a b) where
+  show = showTupla
+  
